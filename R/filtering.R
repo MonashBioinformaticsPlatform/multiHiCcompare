@@ -55,6 +55,11 @@ hic_filter <- function(hicexp, zero.p = 0.8, A.min = 5, remove.regions = hg19_cy
 
   hic_tbl_filt <- hic_tbl[, hic_tbl[zeros_fraq <= zero.p & A > A.min]]
   hic_tbl_filt[, c("A", "zeros_fraq"):=NULL]
+
+  n_uniq_bins_filt <- dim(hic_tbl_filt)
+  msg <- paste0("MSG: Number of unique bins after filtering: ", n_uniq_bins_filt[1], "\n")
+  cat(msg)
+
   slot(hicexp, "hic_table") <- hic_tbl_filt
 
   return(hicexp)

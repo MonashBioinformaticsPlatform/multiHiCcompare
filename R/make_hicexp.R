@@ -153,10 +153,13 @@ make_hicexp <- function(..., data_list = NA, groups, covariates = NULL,
   }
   
   # cycle through groups to create a table for each experimental condition
-  print("CUSTOM")
   hic_tbl <- Reduce(function(x, y) { merge.data.table(x, y, by = c("chr", "region1", "region2"), no.dups = FALSE, all = TRUE) }, tabs)
   hic_tbl[is.na(hic_tbl)] <- 0
   
+  n_uniq_bins <- dim(hic_tbl)
+  msg <- paste0("MSG: Number of unique bins before filtering: ", n_uniq_bins[1], "\n")
+  cat(msg)
+
   # calculate resolution
   bins <- unique(c(hic_tbl$region1, hic_tbl$region2))
   bins <- bins[order(bins)]
